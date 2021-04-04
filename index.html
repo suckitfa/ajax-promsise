@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script src="./js/myajax+promise.js"></script>
+    <script>
+        let xhr = new XMLHttpRequest;
+        xhr.open("HEAD", 'http://shit.com');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 2) {
+                let headers = xhr.getAllResponseHeaders();
+                headers = headers.split(/\n/);
+                let res = {};
+                headers.forEach((item) => {
+                    let [key = '', value = ''] = item.split(':');
+                    if (key.trim() === '') return;
+                    res[key.trim()] = value.trim()
+                });
+
+                console.log(res);
+                /**
+                 * cache-control: max-age=3600
+content-length: 312
+content-type: text/html; charset=UTF-8
+date: Sun, 04 Apr 2021 02:47:18 GMT
+etag: W/"55462079-312-2021-04-04T01:26:15.386Z"
+last-modified: Sun, 04 Apr 2021 01:26:15 GMT
+server: ecstatic-3.3.2
+                */
+            }
+        }
+        xhr.send(null);
+    </script>
+</body>
+
+</html>
